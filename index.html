@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadoo - Travel Agency</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FF6B35;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-login {
+            background: none;
+            border: none;
+            color: #333;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-signup {
+            background: #FF6B35;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .btn-signup:hover {
+            background: #e55a2b;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8f9ff 0%, #fff 100%);
+            padding: 120px 0 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .hero-text .highlight {
+            color: #FF6B35;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: #FF6B35;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+
+        .play-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .play-icon {
+            width: 50px;
+            height: 50px;
+            background: #FF6B35;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .hero-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: #FF6B35;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Destinations Section */
+        .destinations {
+            padding: 80px 0;
+            background: #f8f9ff;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .destination-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .destination-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .destination-info {
+            padding: 1.5rem;
+        }
+
+        .destination-info h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .destination-price {
+            color: #FF6B35;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Booking Section */
+        .booking {
+            padding: 80px 0;
+            background: #fff;
+        }
+
+        .booking-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .booking-steps {
+            list-style: none;
+        }
+
+        .booking-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #FF6B35;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .step-content p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .booking-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: #f8f9ff;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .testimonial-content {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #FF6B35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .testimonial-text {
+            flex: 1;
+        }
+
+        .testimonial-text p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Partners */
+        .partners {
+            padding: 60px 0;
+            background: #fff;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            text-align: center;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .partner-logo:hover {
+            opacity: 1;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #FF6B35, #e55a2b);
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 400px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .newsletter-btn {
+            background: #333;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background: #555;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #FF6B35;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 2rem;
+            text-align: center;
+            color: #ccc;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .booking-content {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">Jadoo</div>
+            <ul class="nav-links">
+                <li><a href="#home">Destinations</a></li>
+                <li><a href="#hotels">Hotels</a></li>
+                <li><a href="#flights">Flights</a></li>
+                <li><a href="#bookings">Bookings</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button class="btn-login">Login</button>
+                <button class="btn-signup">Sign up</button>
+                <select style="border: none; background: none; color: #333;">
+                    <option>EN</option>
+                    <option>VI</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Travel, enjoy and live a <span class="highlight">new and full life</span></h1>
+                    <p>Built Wicket longer admire do barton vanity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary">Find out more</button>
+                        <button class="play-btn">
+                            <div class="play-icon">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            Play Demo
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="/placeholder.svg?height=500&width=400" alt="Woman traveler">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>We Offer Best Services</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-satellite-dish"></i>
+                    </div>
+                    <h3>Calculated Weather</h3>
+                    <p>Built Wicket longer admire do barton vanity itself do in it.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3>Best Flights</h3>
+                    <p>Engrossed listening. Park gate sell they west hard for the.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Local Events</h3>
+                    <p>Barton vanity itself do in it. Preferred to men it engrossed listening.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3>Customization</h3>
+                    <p>We deliver outsourced aviation services for military customers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Destinations Section -->
+    <section class="destinations">
+        <div class="container">
+            <div class="section-title">
+                <h2>Top Destinations</h2>
+            </div>
+            <div class="destinations-grid">
+                <div class="destination-card">
+                    <img src="/placeholder.svg?height=250&width=300" alt="Rome, Italy">
+                    <div class="destination-info">
+                        <h3>Rome, Italy</h3>
+                        <p class="destination-price">$5,42k</p>
+                        <p><i class="fas fa-navigation"></i> 10 Days Trip</p>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="/placeholder.svg?height=250&width=300" alt="London, UK">
+                    <div class="destination-info">
+                        <h3>London, UK</h3>
+                        <p class="destination-price">$4.2k</p>
+                        <p><i class="fas fa-navigation"></i> 12 Days Trip</p>
+                    </div>
+                </div>
+                <div class="destination-card">
+                    <img src="/placeholder.svg?height=250&width=300" alt="Full Europe">
+                    <div class="destination-info">
+                        <h3>Full Europe</h3>
+                        <p class="destination-price">$15k</p>
+                        <p><i class="fas fa-navigation"></i> 28 Days Trip</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking">
+        <div class="container">
+            <div class="booking-content">
+                <div>
+                    <h2>Book Your Next Trip In 3 Easy Steps</h2>
+                    <ul class="booking-steps">
+                        <li class="booking-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Choose Destination</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus.</p>
+                            </div>
+                        </li>
+                        <li class="booking-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Make Payment</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus.</p>
+                            </div>
+                        </li>
+                        <li class="booking-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Reach Airport on Selected Date</h4>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna, tortor tempus.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="booking-card">
+                    <img src="/placeholder.svg?height=200&width=300" alt="Booking Interface">
+                    <h3>Trip To Greece</h3>
+                    <p>14-29 June | by Robbin joseph</p>
+                    <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                        <i class="fas fa-leaf" style="color: #84c3ce;"></i>
+                        <i class="fas fa-map" style="color: #f8a5c2;"></i>
+                        <i class="fas fa-navigation" style="color: #f7dd43;"></i>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <i class="fas fa-building" style="color: #84c3ce;"></i>
+                            <span>24 people going</span>
+                        </div>
+                        <i class="fas fa-heart" style="color: #ff6b6b;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>What People Say About Us</h2>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <div class="testimonial-avatar">M</div>
+                    <div class="testimonial-text">
+                        <p>"On the Windows talking painted pasture yet its express parties use. Sure last upon he same as knew next. Of believed or diverted no."</p>
+                        <div class="testimonial-author">Mike taylor</div>
+                        <div style="color: #666; font-size: 0.9rem;">Lahore, Pakistan</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="container">
+            <div class="partners-grid">
+                <div class="partner-logo">
+                    <img src="/placeholder.svg?height=60&width=120" alt="Axon">
+                </div>
+                <div class="partner-logo">
+                    <img src="/placeholder.svg?height=60&width=120" alt="Jetstar">
+                </div>
+                <div class="partner-logo">
+                    <img src="/placeholder.svg?height=60&width=120" alt="Expedia">
+                </div>
+                <div class="partner-logo">
+                    <img src="/placeholder.svg?height=60&width=120" alt="Qantas">
+                </div>
+                <div class="partner-logo">
+                    <img src="/placeholder.svg?height=60&width=120" alt="Alitalia">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Subscribe to get information, latest news and other interesting offers about Jadoo</h2>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email">
+                <button class="newsletter-btn">Subscribe</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Jadoo</h3>
+                    <p>Book your trip in minute, get full Control for much longer.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Mobile</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="#">Help/FAQ</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Affiliates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>More</h3>
+                    <ul>
+                        <li><a href="#">Airlinefees</a></li>
+                        <li><a href="#">Airline</a></li>
+                        <li><a href="#">Low fare tips</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Jadoo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = '#fff';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Thank you for subscribing!');
+                document.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        // Service cards hover effect
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Destination cards hover effect
+        document.querySelectorAll('.destination-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
